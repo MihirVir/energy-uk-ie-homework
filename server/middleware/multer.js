@@ -9,8 +9,8 @@ const storage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         const ext = file.mimetype.split('/')[1]
-        // file(first four characters of the original file name)-Date.Now();
-        cb(null, `${file.originalname.replace(/\s/g,"").substring(0, 4)}-${Date.now()}.${ext}`);
+        // file name + current date
+        cb(null, `${file.originalname.replace(/\s/g,"")}-${Date.now()}.${ext}`);
     }
 }) 
 
