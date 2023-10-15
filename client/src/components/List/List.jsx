@@ -3,7 +3,6 @@ import axios from 'axios'
 import "./list.css"
 const List = () => {
   const [pdfs, setPdfs] = useState([]);
-  const [deletePopUp, setDeletePopUp] = useState(false);
   const [id, setId] = useState('');
   const fetchData = async () => {
     try {

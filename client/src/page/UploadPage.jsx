@@ -10,7 +10,7 @@ const UploadPage = () => {
         <main className = "main-container">
             <div className="content-wrapper">
                 <Uploader />
-                <List />
+                <List />  
             </div>
         </main>
     </>
