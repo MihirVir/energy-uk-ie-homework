@@ -25,9 +25,10 @@ const mergeUploadedFiles = async (req, res) => {
         
         const mergedFileName = `merged-with-cover-${req.file.filename}`;
         
+        uploadedFiles.push({id: crypto.randomBytes(4).toString('hex'), filename: req.file.filename,mergedfile: mergedFileName});
+        
         await fs.writeFile(path.join(__dirname, '..','cover', mergedFileName), mergedFile);
         
-        uploadedFiles.push({id: crypto.randomBytes(4).toString('hex'), filename: req.file.filename,mergedfile: mergedFileName});
         return res.status(201).send({ message: "Merged and uploaded the file" });
     } catch (err) {
         console.log(err);
@@ -79,18 +80,22 @@ const getSpecificFile =  (req, res) => {
 
 const deleteSpecificFile = async (req, res) => {
     const id = req.params.id;
-    for (file of uploadedFiles) {
-        if (file.id === id) {
-            await fs.unlink(path.join(__dirname, "..", "cover", file.mergedfile));
-            await fs.unlink(path.join(__dirname, "..", "uploads", file.filename));
-            const idx = uploadedFiles.findIndex(item => item.id === file.id)
-            if (idx !== -1) {
-                uploadedFiles.splice(idx, 1);
+    try {
+        for (file of uploadedFiles) {
+            if (file.id === id) {
+                const idx = uploadedFiles.findIndex(item => item.id === file.id)
+                if (idx !== -1) {
+                    uploadedFiles.splice(idx, 1);
+                }
+                
+                await fs.unlink(path.join(__dirname, "..", "cover", file.mergedfile));
+                await fs.unlink(path.join(__dirname, "..", "uploads", file.filename));
             }
-            console.log(uploadedFiles);
         }
+        return res.status(200).json({message: "Successfully Deleted The file"})
+    } catch (err) {
+        console.og(err);
     }
-    return res.status(200).json({message: "Successfully Deleted The file"})
 }
 
 module.exports = {
