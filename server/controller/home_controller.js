@@ -68,8 +68,35 @@ const getPdfFiles = (req, res) => {
 }
 
 
+const getSpecificFile =  (req, res) => {
+    const id = req.params.id;
+    for(file of uploadedFiles) {
+        if (file.id === id) {
+            return res.status(201).send(file);
+        }
+    }
+}
+
+const deleteSpecificFile = async (req, res) => {
+    const id = req.params.id;
+    for (file of uploadedFiles) {
+        if (file.id === id) {
+            await fs.unlink(path.join(__dirname, "..", "cover", file.mergedfile));
+            await fs.unlink(path.join(__dirname, "..", "uploads", file.filename));
+            const idx = uploadedFiles.findIndex(item => item.id === file.id)
+            if (idx !== -1) {
+                uploadedFiles.splice(idx, 1);
+            }
+            console.log(uploadedFiles);
+        }
+    }
+    return res.status(200).json({message: "Successfully Deleted The file"})
+}
+
 module.exports = {
     uploadPdf,
     mergeUploadedFiles,
-    getPdfFiles
+    getPdfFiles,
+    getSpecificFile,
+    deleteSpecificFile
 }
