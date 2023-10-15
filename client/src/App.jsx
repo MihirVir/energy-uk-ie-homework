@@ -1,9 +1,12 @@
 import React from 'react'
+import UploadPage from './page/UploadPage'
 
 const App = () => {
   return (
     <>
-      <div>App</div>
+      <>
+        <UploadPage />
+      </>
     </>
   )
 }
