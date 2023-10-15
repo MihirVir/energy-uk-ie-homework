@@ -33,11 +33,13 @@ const List = () => {
             {pdfs && pdfs.map((item) => {
               return (
                 <>
-                  <div key = {item.id} className="card">
-                    <p>{item.mergedfile}</p>
-                    <p>{item.filename}</p>
-                    <button onClick = {() => {deleteFile(item.id)}} className = "delete-pdf-btn" >Delete</button>
-                  </div>
+                    <div key = {item.id} className="card">
+                      <a style = {{color: "black", textDecoration: "none"}} href={`http://localhost:5000/cover/${item.mergedfile}`} download={`item.filename`} rel="noopener noreferrer" target="_blank">
+                        <p style = {{marginBottom: ".2rem"}}>merged file name : {item.mergedfile}</p>
+                        <p>filename: {item.filename}</p>
+                      </a>
+                      <button onClick = {() => {deleteFile(item.id)}} className = "delete-pdf-btn" >Delete</button>
+                    </div>
                 </>
               )
             })}
