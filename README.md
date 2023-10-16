@@ -20,3 +20,4 @@ Client file contains the frontend part of the assignment
        ```npm install```
 3. Run the following command to spin the server up:
        ```npm start```
+4. Create 2 Folders in the server directory if they dont exist ```uploads dir and cover dir```
